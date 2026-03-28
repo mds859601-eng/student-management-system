@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+    }
+
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background: #2c3e50;
+      color: white;
+    }
+
+    .delete-btn {
+      background: red;
+    }
+  </style>
+</head>
+<body>
+
+<header>📚 Student Management System</header>
+
+<div class="container">
+  <h3>Add Student</h3>
+  <input type="text" id="name" placeholder="Student Name">
+  <input type="text" id="roll" placeholder="Roll No">
+  <input type="text" id="course" placeholder="Course">
+  <button onclick="addStudent()">Add</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Roll No</th>
+        <th>Course</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+  </table>
+</div>
+
+<script>
+  // Array to store student data
+  // Preloaded random students data
+  let students = [
+    { name: "Rahul Sharma", roll: "101", course: "B.Tech CSE" },
+    { name: "Anjali Verma", roll: "102", course: "B.Sc IT" },
+    { name: "Amit Kumar", roll: "103", course: "BCA" },
+    { name: "Sneha Patil", roll: "104", course: "B.Tech ECE" },
+    { name: "Rohit Das", roll: "105", course: "BBA" }
+  ];
+
+  // Display initial students on page load
+  window.onload = function() {
+    displayStudents();
+  };
+
+  // Function to add student
+  function addStudent() {
+    const name = document.getElementById('name').value;
+    const roll = document.getElementById('roll').value;
+    const course = document.getElementById('course').value;
+
+    if (name === '' || roll === '' || course === '') {
+      alert('Please fill all fields');
+      return;
+    }
+
+    const student = { name, roll, course };
+    students.push(student);
+
+    displayStudents();
+    clearFields();
+  }
+
+  // Function to display students in table
+  function displayStudents() {
+    const table = document.getElementById('studentTable');
+    table.innerHTML = '';
+
+    students.forEach((student, index) => {
+      table.innerHTML += `
+        <tr>
+          <td>${student.name}</td>
+          <td>${student.roll}</td>
+          <td>${student.course}</td>
+          <td><button class="delete-btn" onclick="deleteStudent(${index})">Delete</button></td>
+        </tr>
+      `;
+    });
+  }
+
+  // Function to delete student
+  function deleteStudent(index) {
+    students.splice(index, 1);
+    displayStudents();
+  }
+
+  // Clear input fields
+  function clearFields() {
+    document.getElementById('name').value = '';
+    document.getElementById('roll').value = '';
+    document.getElementById('course').value = '';
+  }
+</script>
+
+</body>
+</html>
